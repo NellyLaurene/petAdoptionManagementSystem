@@ -1,0 +1,102 @@
+package org.pet_adoption_system.view.staff;
+
+import org.pet_adoption_system.view.ConstantView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public class StaffButtonsHeader extends JPanel {
+
+    private final JButton addButton;
+    private final JButton editButton;
+    private final JButton deleteButton;
+
+    private final JTextField idField;
+
+    private final JButton searchButton;
+
+    public StaffButtonsHeader() {
+        setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        setBackground(ConstantView.BACKGROUND);
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Buttons
+        addButton = createButton("Add", ConstantView.PRIMARY);
+        editButton = createButton("Edit", ConstantView.SECONDARY);
+        deleteButton = createButton("Delete", ConstantView.ACCENT);
+
+        add(addButton);
+        add(editButton);
+        add(deleteButton);
+        add(Box.createHorizontalStrut(20));
+
+        // Input fields and dropdowns
+        idField = createInput("ID");
+
+        add(label("ID:"));
+        add(idField);
+
+        searchButton = createButton("Search", ConstantView.PRIMARY);
+        add(Box.createHorizontalStrut(10));
+        add(searchButton);
+    }
+
+    private JButton createButton(String text, Color bgColor) {
+        JButton button = new JButton(text);
+        button.setFocusPainted(false);
+        button.setBackground(bgColor);
+        button.setForeground(ConstantView.WHITE);
+        button.setFont(new Font("SansSerif", Font.BOLD, 12));
+        return button;
+    }
+
+    private JTextField createInput(String placeholder) {
+        JTextField field = new JTextField(10);
+        field.setToolTipText("Search by " + placeholder);
+        field.setBackground(ConstantView.WHITE);
+        field.setForeground(ConstantView.TEXT);
+        return field;
+    }
+
+    private JLabel label(String text) {
+        JLabel label = new JLabel(text);
+        label.setForeground(ConstantView.TEXT);
+        return label;
+    }
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public JButton getEditButton() {
+        return editButton;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public JButton getSearchButton() {
+        return searchButton;
+    }
+
+    public JTextField getIdField() {
+        return idField;
+    }
+
+    public Map<String, String> getFilters() {
+        Map<String, String> filters = new HashMap<>();
+        filters.put("id", idField.getText().trim());
+        return filters;
+    }
+
+    public void setAddAction(Runnable action) {
+        addButton.addActionListener(e -> action.run());
+    }
+
+    public void setEditAction(Runnable action) {
+        editButton.addActionListener(e -> action.run());
+    }
+}
